@@ -1,0 +1,62 @@
+version: '3'
+services:
+  opsflow-orchestrator:
+    container_name: opsflow-orchestrator
+    restart: "always"
+    build:
+      context: ./opsflow-orchestrator
+      dockerfile: Dockerfile
+    image: opsflow-orchestrator
+    command: "npm run start"
+    ports:
+      - 3000:8080
+    tty: true
+    networks:
+      - custom_network
+
+  acehub-api:
+    container_name: acehub-api
+    restart: "always"
+    build:
+      context: ./acehub-api
+      dockerfile: Dockerfile
+    image: acehub-api
+    command: "npm run start"
+    ports:
+      - 3001:8080
+    tty: true
+    networks:
+      - custom_network
+
+  ideal-api:
+    container_name: ideal-api
+    restart: "always"
+    build:
+      context: ./ideal-api
+      dockerfile: Dockerfile
+    image: ideal-api
+    command: "npm run start"
+    ports:
+      - 3002:8080
+    tty: true
+    networks:
+      - custom_network
+
+  payon-api:
+    container_name: payon-api
+    restart: "always"
+    build:
+      context: ./payon-api
+      dockerfile: Dockerfile
+    image: payon-api
+    command: "npm run start"
+    ports:
+      - 3003:8080
+    tty: true
+    networks:
+      - custom_network
+
+networks:
+  custom_network:
+    external:
+      name: payvision
