@@ -1,0 +1,13 @@
+.git
+.vscode/
+.gitignore
+.commitlintrc.js
+.huskyrc.js
+.lintstagedrc.js
+README.md
+Dockerfile*
+packages/
+dist/
+logs/
+node_modules/
+*.env
