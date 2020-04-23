@@ -1,28 +1,54 @@
-import { v4 as uuidv4 } from 'uuid';
 import { Injectable } from '@nestjs/common';
-import { Message } from './interfaces/message.interfaces';
-import { AccountDto } from './dto/account.dto';
+import { MessageDto } from './dto/message.dto';
+import { RabbitSubscribe, AmqpConnection } from '@nestjs-plus/rabbitmq';
 
 @Injectable()
 export class AppService {
-  configure(account: AccountDto): string {
-    const message: Message = {
-      correlationId: uuidv4(),
-      payload: {
-        timestamp: new Date(Date.now()),
-        account: account
-      }
+    constructor(
+        private readonly amqpConnection: AmqpConnection
+    ) { }
+
+    @RabbitSubscribe({
+        exchange: 'saga-exchange-router',
+        routingKey: 'saga-ideal-route-response',
+        queue: 'saga-ideal-queue-response'
+    })
+    async iDealSubHandler(msg: MessageDto) {
+        console.log(`Orchrestator.Sub.ideal_configured`, msg.correlationId);
+        this.idealNext(msg);
     }
 
-    this.produce(message);
-    return message.correlationId;
-  }
+    async idealNext(msg: MessageDto) {
+        console.log(`Orchrestator.Pub.configure_payon`, msg.correlationId);
+        await this.amqpConnection.publish('saga-exchange', 'saga-payon-route-request', msg);
+    }
 
-  private produce(message: Message) {
-    console.log(`Orchrestator.Produce.Message`, message);
-  }
+    @RabbitSubscribe({
+        exchange: 'saga-exchange-router',
+        routingKey: 'saga-payon-route-response',
+        queue: 'saga-payon-queue-response'
+    })
+    async payOnSubHandler(msg: MessageDto) {
+        console.log(`Orchrestator.Sub.payon_configured`, msg.correlationId);
+        this.payOnNext(msg);
+    }
 
-  private consume() {
+    async payOnNext(msg: MessageDto) {
+        console.log(`Orchrestator.Pub.configure_acehub`, msg.correlationId);
+        await this.amqpConnection.publish('saga-exchange', 'saga-acehub-route-request', msg);
+    }
 
-  }
+    @RabbitSubscribe({
+        exchange: 'saga-exchange-router',
+        routingKey: 'saga-acehub-route-response',
+        queue: 'saga-acehub-queue-response'
+    })
+    async acehubSubHandler(msg: MessageDto) {
+        console.log(`Orchrestator.Sub.acehub_configured`, msg.correlationId);
+        this.finish(msg);
+    }
+
+    async finish(msg: MessageDto) {
+        console.log(`Orchrestator.finished`, msg.correlationId);
+    }
 }

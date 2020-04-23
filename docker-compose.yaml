@@ -7,6 +7,8 @@ services:
       context: ./opsflow-orchestrator
       dockerfile: Dockerfile
     image: opsflow-orchestrator
+    environment:
+      - RABBIT_URL=amqp://admin:admin@message-broker:5672
     ports:
       - 3000:8080
     tty: true
@@ -20,8 +22,14 @@ services:
       context: ./acehub-api
       dockerfile: Dockerfile
     image: acehub-api
+    environment:
+      - RABBIT_URL=amqp://admin:admin@message-broker:5672
+    volumes:
+      - ./acehub-api:/app
+    command: "npm run start"
     ports:
       - 3001:8080
+      - 9289:9229
     tty: true
     networks:
       - custom_network
@@ -33,6 +41,8 @@ services:
       context: ./ideal-api
       dockerfile: Dockerfile
     image: ideal-api
+    environment:
+      - RABBIT_URL=amqp://admin:admin@message-broker:5672
     ports:
       - 3002:8080
     tty: true
@@ -46,6 +56,8 @@ services:
       context: ./payon-api
       dockerfile: Dockerfile
     image: payon-api
+    environment:
+      - RABBIT_URL=amqp://admin:admin@message-broker:5672
     ports:
       - 3003:8080
     tty: true
