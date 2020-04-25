@@ -1,0 +1,22 @@
+version: '3'
+services:
+  message-broker:
+    container_name: sql-server
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: sql-server
+    environment:
+      - SA_PASSWORD=password
+      - PORT=8044
+      - MSSQL_PID=Express
+      - ACCEPT_EULA=Y
+    ports:
+     - "8044:1433"
+    networks:
+     - custom_network   
+
+networks:
+  custom_network:
+    external:
+      name: payvision

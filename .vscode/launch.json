@@ -1,0 +1,28 @@
+{
+    // Use IntelliSense to learn about possible attributes.
+    // Hover to view descriptions of existing attributes.
+    // For more information, visit: https://go.microsoft.com/fwlink/?linkid=830387
+    "version": "0.2.0",
+    "configurations": [
+        {
+            "name": "Debug Orchestrator Api",
+            "type": "node",
+            "request": "attach",
+            "port": 9290,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}/opsflow-orchestrator",
+            "remoteRoot": "/app",
+            "protocol": "inspector"
+        },
+        {
+            "name": "Debug AceHub Api",
+            "type": "node",
+            "request": "attach",
+            "port": 9291,
+            "address": "localhost",
+            "localRoot": "${workspaceFolder}/acehub-api",
+            "remoteRoot": "/app",
+            "protocol": "inspector"
+        }
+    ]
+}

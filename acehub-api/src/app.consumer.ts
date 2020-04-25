@@ -1,4 +1,3 @@
-import { MessageDto } from './dto/message.dto';
 import { RabbitSubscribe } from '@nestjs-plus/rabbitmq';
 import { AppService } from './app.service';
 import { Injectable } from '@nestjs/common';
@@ -14,7 +13,7 @@ export class AppConsumer {
     routingKey: 'saga-acehub-route-request',
     queue: 'saga-acehub-queue-request'
   })
-  async pubSubHandler(msg: MessageDto) {
+  async pubSubHandler(msg: any) {
     console.log(`Acehub.Sub.configure_acehub`, msg.correlationId);
     this.appService.configure(msg);
   }

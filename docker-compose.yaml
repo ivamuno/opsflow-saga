@@ -9,8 +9,19 @@ services:
     image: opsflow-orchestrator
     environment:
       - RABBIT_URL=amqp://admin:admin@message-broker:5672
+      - DB_USER=sa
+      - DB_PASSWORD=password
+      - DB_PORT=1433
+      - DB_HOST=sql-server
+      - DB_NAME=Opsflow
+      - DB_CONNECTION_TIMEOUT=5000
+      - DB_REQUEST_TIMEOUT=5000
+    volumes:
+      - ./opsflow-orchestrator:/app
+    command: "npm run start:debug"
     ports:
       - 3000:8080
+      - 9290:9229
     tty: true
     networks:
       - custom_network
@@ -26,40 +37,10 @@ services:
       - RABBIT_URL=amqp://admin:admin@message-broker:5672
     volumes:
       - ./acehub-api:/app
-    command: "npm run start"
+    command: "npm run start:debug"
     ports:
       - 3001:8080
-      - 9289:9229
-    tty: true
-    networks:
-      - custom_network
-
-  ideal-api:
-    container_name: ideal-api
-    restart: "always"
-    build:
-      context: ./ideal-api
-      dockerfile: Dockerfile
-    image: ideal-api
-    environment:
-      - RABBIT_URL=amqp://admin:admin@message-broker:5672
-    ports:
-      - 3002:8080
-    tty: true
-    networks:
-      - custom_network
-
-  payon-api:
-    container_name: payon-api
-    restart: "always"
-    build:
-      context: ./payon-api
-      dockerfile: Dockerfile
-    image: payon-api
-    environment:
-      - RABBIT_URL=amqp://admin:admin@message-broker:5672
-    ports:
-      - 3003:8080
+      - 9291:9229
     tty: true
     networks:
       - custom_network
