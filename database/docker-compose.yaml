@@ -1,18 +1,18 @@
 version: '3'
 services:
   message-broker:
-    container_name: sql-server
+    container_name: sql-server-orch
     build:
       context: .
       dockerfile: Dockerfile
-    image: sql-server
+    image: sql-server-orch
     environment:
-      - SA_PASSWORD=password
-      - PORT=8044
+      - SA_PASSWORD=paSSword1234!
+      - PORT=9040
       - MSSQL_PID=Express
       - ACCEPT_EULA=Y
     ports:
-     - "8044:1433"
+     - "9040:1433"
     networks:
      - custom_network   
 

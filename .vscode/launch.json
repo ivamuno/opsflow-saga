@@ -5,12 +5,21 @@
     "version": "0.2.0",
     "configurations": [
         {
+            "name": "Web",
+            "port": 9229,
+            "request": "attach",
+            "skipFiles": [
+                "<node_internals>/**"
+            ],
+            "type": "pwa-node"
+        },
+        {
             "name": "Debug Orchestrator Api",
             "type": "node",
             "request": "attach",
             "port": 9290,
             "address": "localhost",
-            "localRoot": "${workspaceFolder}/opsflow-orchestrator",
+            "localRoot": "${workspaceFolder}/projects/opsflow-orchestrator",
             "remoteRoot": "/app",
             "protocol": "inspector"
         },
@@ -20,7 +29,7 @@
             "request": "attach",
             "port": 9291,
             "address": "localhost",
-            "localRoot": "${workspaceFolder}/acehub-api",
+            "localRoot": "${workspaceFolder}/projects/acehub-api",
             "remoteRoot": "/app",
             "protocol": "inspector"
         }

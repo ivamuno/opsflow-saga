@@ -1,0 +1,24 @@
+version: '3'
+services:
+  opsflow-web-orch:
+    container_name: opsflow-web-orch
+    build:
+      context: .
+      dockerfile: Dockerfile
+    image: opsflow-web-orch
+    environment:
+      - RABBIT_URL=amqp://admin:admin@message-broker-orch:5672
+    volumes:
+      - .:/app
+    command: "npm run start"
+    ports:
+      - 9045:9045
+      - 9293:9229
+    tty: true
+    networks:
+      - custom_network
+
+networks:
+  custom_network:
+    external:
+      name: payvision

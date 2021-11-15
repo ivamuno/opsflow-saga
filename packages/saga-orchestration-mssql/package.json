@@ -1,0 +1,27 @@
+{
+  "name": "@saga-orchestration/mssql",
+  "version": "1.0.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p tsconfig.build.json && cp package.json ./dist/",
+    "publishDist": "npm run build && npm publish ./dist/"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@nestjs/common": "^7.0.9",
+    "@nestjs/core": "^7.0.13",
+    "@nestjs/typeorm": "^7.0.0",
+    "@saga-orchestration/core": "^1.0.0",
+    "rxjs": "^6.5.5",
+    "typeorm": "^0.2.25"
+  },
+  "devDependencies": {
+    "@types/node": "^14.0.5",
+    "typescript": "^3.8.3",
+    "rimraf": "^3.0.2"
+  }
+}

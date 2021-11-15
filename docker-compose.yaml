@@ -4,43 +4,62 @@ services:
     container_name: opsflow-orchestrator
     restart: "always"
     build:
-      context: ./opsflow-orchestrator
+      context: ./projects/opsflow-orchestrator
       dockerfile: Dockerfile
     image: opsflow-orchestrator
     environment:
-      - RABBIT_URL=amqp://admin:admin@message-broker:5672
+      - RABBIT_URL=amqp://admin:admin@message-broker-orch:5672
       - DB_USER=sa
-      - DB_PASSWORD=password
+      - DB_PASSWORD=paSSword1234!
       - DB_PORT=1433
-      - DB_HOST=sql-server
+      - DB_HOST=sql-server-orch
       - DB_NAME=Opsflow
       - DB_CONNECTION_TIMEOUT=5000
       - DB_REQUEST_TIMEOUT=5000
     volumes:
-      - ./opsflow-orchestrator:/app
+      - ./projects/opsflow-orchestrator:/app
     command: "npm run start:debug"
     ports:
-      - 3000:8080
+      - 9042:8080
       - 9290:9229
     tty: true
     networks:
       - custom_network
 
   acehub-api:
-    container_name: acehub-api
+    container_name: acehub-api-orch
     restart: "always"
     build:
-      context: ./acehub-api
+      context: ./projects/acehub-api
       dockerfile: Dockerfile
     image: acehub-api
     environment:
-      - RABBIT_URL=amqp://admin:admin@message-broker:5672
+      - RABBIT_URL=amqp://admin:admin@message-broker-orch:5672
     volumes:
-      - ./acehub-api:/app
-    command: "npm run start:debug"
+      - ./projects/acehub-api:/app
+    command: "npm run start"
     ports:
-      - 3001:8080
+      - 9043:8080
       - 9291:9229
+    tty: true
+    networks:
+      - custom_network
+      
+  payon-api:
+    container_name: payon-api-orch
+    restart: "always"
+    build:
+      context: ./projects/payon-api
+      dockerfile: Dockerfile
+    image: payon-api
+    environment:
+      - RABBIT_URL=amqp://admin:admin@message-broker-orch:5672
+    volumes:
+      - ./projects/payon-api:/app
+    command: "npm run start"
+    ports:
+      - 9044:8080
+      - 9292:9229
     tty: true
     networks:
       - custom_network

@@ -1,0 +1,25 @@
+// Toggles
+//
+// Used in conjunction with global variables to enable certain theme features.
+
+// Vendor
+@import "vendor/rfs";
+
+// Deprecate
+@import "mixins/deprecate";
+
+// Utilities
+@import "mixins/vendor-prefixes";
+
+// Components
+@import "mixins/bootstrap_switch";
+@import "mixins/buttons";
+@import "mixins/chartist";
+@import "mixins/inputs";
+@import "mixins/morphing-buttons";
+@import "mixins/navbars";
+@import "mixins/social-buttons";
+@import "mixins/table-row";
+@import "mixins/tabs";
+@import "mixins/transparency";
+@import "mixins/vendor-prefixes";

@@ -1,0 +1,21 @@
+{
+  "name": "@opsflow-orchestration/participants",
+  "version": "2.4.0",
+  "description": "",
+  "main": "dist/index.js",
+  "types": "dist/index.d.ts",
+  "scripts": {
+    "clean": "rimraf dist",
+    "build": "npm run clean && tsc -p tsconfig.build.json && cp package.json ./dist/",
+    "publishDist": "npm run build && npm publish ./dist/"
+  },
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@saga-orchestration/core": "^1.0.0"
+  },
+  "devDependencies": {
+    "typescript": "^3.8.3",
+    "rimraf": "^3.0.2"
+  }
+}

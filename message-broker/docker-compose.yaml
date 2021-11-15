@@ -1,19 +1,19 @@
 version: '3'
 services:
   message-broker:
-    container_name: message-broker
+    container_name: message-broker-orch
     build:
       context: .
-    image: message-broker
+    image: message-broker-orch
     environment:
       - RABBITMQ_DEFAULT_USER=admin
       - RABBITMQ_DEFAULT_PASS=admin
       - RABBITMQ_DEFAULT_VHOST=/
     ports:
-     - "5672:5672"
-     - "15672:15672"
+     - "9041:5672"
+     - "19041:15672"
     healthcheck:
-        test: ["CMD", "curl", "-f", "http://localhost:15672"]
+        test: ["CMD", "curl", "-f", "http://localhost:19041"]
         interval: 30s
         timeout: 10s
         retries: 5

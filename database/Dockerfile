@@ -4,9 +4,11 @@
 
 FROM mcr.microsoft.com/mssql/server:2017-latest
 
-
 RUN useradd -M -s /bin/bash -u 10001 -g 0 mssql
 RUN mkdir -p -m 770 /var/opt/mssql && chgrp -R 0 /var/opt/mssql
 
+COPY ./scripts .
+
 USER 10001
+
 CMD ["/opt/mssql/bin/sqlservr"]
